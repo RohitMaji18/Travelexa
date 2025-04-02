@@ -9,7 +9,6 @@ const factory = require('./handlerFactory');
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   //1>get the current booked tour
   const tour = await Tour.findById(req.params.tourId);
-  console.log(tour);
 
   //2>create the checkout session
 

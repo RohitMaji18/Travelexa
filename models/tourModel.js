@@ -169,11 +169,11 @@ tourSchema.pre(/^find/, function(next) {
   next();
 });
 // After executing any find query, log the query duration and the results
-tourSchema.post(/^find/, function(docs, next) {
-  // console.log(`Query took: ${Date.now() - this.start} milliseconds`);
-  // console.log(docs); // Log the documents retrieved
-  next();
-});
+// tourSchema.post(/^find/, function(docs, next) {
+//   // console.log(`Query took: ${Date.now() - this.start} milliseconds`);
+//   // console.log(docs); // Log the documents retrieved
+//   next();
+// });
 
 // Create a Tour model from the schema (like a factory for tour objects)
 const Tour = mongoose.model('Tour', tourSchema);

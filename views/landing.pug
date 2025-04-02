@@ -1,0 +1,108 @@
+extends base
+
+block content
+  //- Hero Section with CSS-only Parallax Effect
+  section.hero-section
+    .hero-parallax
+      img.hero-image(src=heroImage, alt="Explore the world" onerror="this.src='/img/default.jpg'")
+    .hero-content.animate
+      h1.hero-title= heroTitle
+      p.hero-subtitle= heroSubtitle
+      a.hero-btn(href="/tours") Explore Tours
+
+  //- Reasons Section
+  section.reasons.animate
+    .container
+      h2.section-title Why Visit This Destination?
+      .reason-grid
+        each reason in reasonsList
+          .reason-card.animate-card
+            .reason-img-container
+              img.reason-img(src=reason.image, alt=reason.title onerror="this.src='/img/default.jpg'")
+            h3.reason-heading= reason.title
+            p.reason-desc= reason.description
+            a.reason-btn(href=reason.link)= reason.buttonText
+
+  //- Popular Tours Section
+  section.explore.animate
+    .container
+      h2.section-title Popular Tours
+      .explore-grid
+        each tour in tours
+          .explore-card.animate-card
+            .explore-img-container
+              img.explore-img(src=`/img/tours/${tour.imageCover}`, alt=tour.name onerror="this.src='/img/default-tour.jpg'")
+            .explore-content
+              h3.explore-card-title= tour.name
+              p.explore-card-price 
+                span.price-label From 
+                span.price-value $#{tour.price}
+              .explore-buttons
+                a.explore-btn(href=`/tour/${tour.slug}`) View Details
+                a.book-btn(href=`/tour/${tour.slug}`) Book Now
+                
+
+  //- About Section
+  section.about.animate
+    .container
+      h2.section-title= aboutTitle
+      .about-container
+        .about-image-container
+          img.about-image(src=aboutImage, alt="About Us" onerror="this.src='/img/default-about.jpg'")
+        .about-content
+          h3.about-heading= aboutHeading
+          p.about-desc= aboutDescription
+          ul.about-list
+            each fact in aboutFacts
+              li.about-item
+                i.about-icon ✓
+                span= fact
+          //a.about-btn(href="/") Learn More
+
+  //- Reviews Section (Optimized for unique reviews)
+  section.reviews.animate
+    .container
+      h2.section-title What Our Travelers Say
+      if reviewsList && reviewsList.length > 0
+        .review-grid
+          each review in reviewsList
+            .review-card.animate-card
+              .review-header
+                .review-avatar-container
+                  - const photoPath = review.user && review.user.photo ? (review.user.photo.startsWith('http') ? review.user.photo : `/img/users/${review.user.photo}`) : '/img/default-user.jpg';
+                  img.review-avatar(src=photoPath, alt=review.user ? review.user.name : "Anonymous" onerror="this.src='/img/default-user.jpg'")
+                .review-user-info
+                  h3.review-user= review.user ? review.user.name : "Anonymous"
+                  .review-rating
+                    - const stars = Math.round(review.rating);
+                    - for (let i = 0; i < 5; i++)
+                      if i < stars
+                        span.star.filled ★
+                      else
+                        span.star ☆
+              .review-body
+                p.review-text= review.text
+                if review.tour
+                  p.review-tour 
+                    span Tour: 
+                    a(href=`/tour/${review.tour.slug || '#' }`)= review.tour.name
+      else
+        .no-reviews
+          p.no-reviews-text No reviews available yet. Be the first to review!
+
+  //- Contact Section
+  section.contact.animate
+    .container
+      h2.section-title= contactTitle
+      form.contact-form(action="/request", method="POST")
+        .form-group
+          label(for="name") Your Name
+          input#name(type="text", name="name", placeholder="Enter your name", required)
+        .form-group
+          label(for="email") Your Email
+          input#email(type="email", name="email", placeholder="Enter your email", required)
+        .form-group
+          label(for="message") Your Message
+          textarea#message(name="message", placeholder="What would you like to know?", required)
+        button.contact-btn(type="submit") Send Request
+

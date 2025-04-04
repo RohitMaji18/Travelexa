@@ -1374,7 +1374,7 @@ body {
 }
 
 .form__upload + label {
-  color: var(--color-secondary);
+  color: var(--color-secobndary);
   display: inline-block;
   text-decoration: none;
   border-bottom: 1px solid var(--color-secondary);

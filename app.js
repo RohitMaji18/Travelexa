@@ -5,6 +5,7 @@ const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -25,6 +26,10 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) MIDDLEWARES
+//implement CORS
+app.use(cors());
+app.options('*', cors());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ✅ Fix: Set correct CSP policy

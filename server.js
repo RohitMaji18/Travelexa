@@ -44,3 +44,14 @@ process.on('unhandledRejection', err => {
     process.exit(1); // Gracefully shutting down the server before exiting
   });
 });
+// Gracefully handle SIGTERM (e.g., when Render stops the app for deployment)
+process.on('SIGTERM', () => {
+  console.log('👋 SIGTERM received. Shutting down gracefully');
+
+  // Stop the server from accepting new connections
+  server.close(() => {
+    console.log('💥 Server closed. Process terminated!');
+
+    // Optional: Close DB connections or other cleanup tasks here
+  });
+});

@@ -18,20 +18,16 @@ const signToken = id => {
   );
 };
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
   // Generate JWT and send response with status code
   const token = signToken(user._id);
-
-  const cookieOptions = {
+  res.cookie('jwt', token, {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ), // Expiration time for the JWT cookie
-    httpOnly: true // Prevent client-side JavaScript from accessing the cookie
-  };
-
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
-  res.cookie('jwt', token, cookieOptions);
+    httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
+  });
   //romove the password
   user.password = undefined;
 
@@ -59,7 +55,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   await new Email(newUser, url).sendWelcome();
 
   // Sending response with status 201 (Created) and user details
-  createSendToken(newUser, 201, res);
+  createSendToken(newUser, 201, req, res);
 });
 
 // Controller function for user login, wrapped with catchAsync to handle errors
@@ -83,7 +79,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   // 5) Generate JWT token and send it to the client for authentication
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 exports.logout = (req, res) => {
@@ -262,7 +258,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // Log the user in and send a new JWT token
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -282,5 +278,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // Log the user in and send a new JWT token
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });

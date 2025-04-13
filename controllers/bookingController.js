@@ -13,39 +13,36 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   //2>create the checkout session
 
   // 2) Create checkout session
+  // 2) Create checkout session
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
-    line_items: [
-      {
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: tour.name,
-            description: tour.description,
-            images: [tour.imageCover]
-          },
-          unit_amount: tour.price * 100 // Convert to cents
-        },
-        quantity: 1
-      }
-    ],
-    mode: 'payment',
-    // success_url: `${req.protocol}://${req.get('host')}/?tour=${
+    // success_url: `${req.protocol}://${req.get('host')}/my-tours/?tour=${
     //   req.params.tourId
     // }&user=${req.user.id}&price=${tour.price}`,
-    success_url: `${req.protocol}://${req.get('host')}/my-tours`,
+    success_url: `${req.protocol}://${req.get('host')}/my-tours?alert=booking`,
     cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
     customer_email: req.user.email,
-    client_reference_id: req.params.tourId
+    client_reference_id: req.params.tourId,
+    line_items: [
+      {
+        name: `${tour.name} Tour`,
+        description: tour.summary,
+        images: [
+          `${req.protocol}://${req.get('host')}/img/tours/${tour.imageCover}`
+        ],
+        amount: tour.price * 100,
+        currency: 'usd',
+        quantity: 1
+      }
+    ]
   });
 
-  //3>create session as response
+  // 3) Create session as response
   res.status(200).json({
     status: 'success',
     session
   });
 });
-
 // exports.createBookingCheckout = catchAsync(async (req, res, next) => {
 //   // This is only TEMPORARY, because it's UNSECURE: everyone can make bookings without paying
 //   const { tour, user, price } = req.query;

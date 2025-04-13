@@ -21,7 +21,7 @@ const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 
-app.enable('trust proxy');
+app.enable('trust proxy', 1); //✅ Secure for Render
 
 // Set template engine
 app.set('view engine', 'pug');

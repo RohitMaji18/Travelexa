@@ -18,7 +18,10 @@ const tourSchema = new mongoose.Schema(
       // Optionally, you can validate to allow only alphabetic characters:
       // validate: [validator.isAlpha, 'Tour name must only contain alpha characters']
     },
-    slug: String, // URL-friendly version of the tour name, generated automatically
+    slug: {
+      type: String,
+      unique: true // This should be unique to prevent duplicate slugs
+    }, // URL-friendly version of the tour name, generated automatically
     duration: {
       type: Number, // Duration of the tour in days
       required: [true, 'A tour must have a duration'] // Duration is required

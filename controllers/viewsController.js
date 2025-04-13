@@ -221,3 +221,11 @@ exports.handleContactRequest = catchAsync(async (req, res) => {
   // Then redirect to the homepage
   res.redirect('/');
 });
+
+exports.alerts = catchAsync(async (req, res, next) => {
+  const { alert } = req.query;
+  if (alert === 'booking')
+    res.locals.alert =
+      "Your booking is successfull! Please check your email for confirmation.If your booking doesn't show up here immediatly ,please come back localStorage.";
+  next();
+});

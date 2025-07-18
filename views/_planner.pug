@@ -1,0 +1,73 @@
+// AI Itinerary Planner
+// =============================
+
+// helper vars
+script.
+  window.locationsList = !{JSON.stringify(tour.locations.map(l => l.description))};
+  window.tourId         = '!{tour.id}';
+
+//- MODIFICATION: Conditionally show button or login link
+if user
+  //- If logged in, button opens the modal.
+  button#openPlanner.btn--green(type='button')
+    svg(width='20' height='20' viewBox='0 0 24 24' fill='currentColor' style='margin-right: 8px')
+      path(d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z')
+    span PLAN MY TRIP
+else
+  //- If not logged in, this is a styled link to the login page.
+  a#openPlanner.btn--green(href='/login' style='display: inline-flex; align-items: center; text-decoration: none;')
+    svg(width='20' height='20' viewBox='0 0 24 24' fill='currentColor' style='margin-right: 8px')
+      path(d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z')
+    span LOG IN & PLAN MY TRIP
+
+// Modal wrapper
+div#plannerModal.hidden
+  div#plannerCard
+    button#closePlanner(type='button') ×
+    
+    div#modalContent
+      .planner-header
+        img(src='/img/plane-lottie.png' alt='plane')
+        h2 Plan Your Trip
+      
+      form#plannerForm
+        .form-group
+          label(for='destination') Destination
+          select#destination.form__input
+          input#customDest.hidden.form__input(type='text' placeholder='Type your destination')
+        
+        .form-group
+          label(for='days') Days
+          input#days.form__input(type='number' min='1' max='14' value=tour.duration required)
+        
+        .form-group
+          label(for='style') Style
+          select#style.form__input
+            option(value='relaxed') Relaxed
+            option(value='balanced' selected) Balanced
+            option(value='adventure') Adventure
+        
+        .form-group
+          label(for='budget') Budget
+          select#budget.form__input
+            option(value='budget') Budget
+            option(value='standard' selected) Standard
+            option(value='luxury') Luxury
+        
+        .form-group
+          label(for='theme') Trip Theme
+          select#theme.form__input
+            option(value='nature') Nature
+            option(value='history') History
+            option(value='foodie') Foodie
+            option(value='nightlife') Nightlife
+        
+        //- This button is UNTOUCHED as requested.
+        button#generateBtn.btn--purple(type='submit')
+          svg(width='20' height='20' viewBox='0 0 24 24' fill='currentColor' style='margin-right: 8px')
+            path(d='M13 3l3.293 3.293-7 7 1.414 1.414 7-7L21 11V3z')
+          span Generate Plan
+
+// External Scripts
+script(src='https://cdnjs.cloudflare.com/ajax/libs/marked/5.1.0/marked.min.js')
+script(src='/js/planner.js')

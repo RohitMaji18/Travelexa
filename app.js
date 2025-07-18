@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const compression = require('compression');
+const aiRouter = require('./routes/aiRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
@@ -17,6 +18,7 @@ const userRouter = require('./routes/userRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
 const bookingController = require('./controllers/bookingController'); //new
 const reviewRouter = require('./routes/reveiwRoutes');
+const cspDirectives = require('./config/helmet-csp');
 const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
@@ -35,7 +37,8 @@ app.options('*', cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ✅ Fix: Set correct CSP policy
-app.use(helmet());
+//app.use(helmet());
+app.use(helmet.contentSecurityPolicy(cspDirectives));
 
 // Logging requests in development mode
 if (process.env.NODE_ENV === 'development') {
@@ -91,6 +94,7 @@ app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRouter);
+app.use('/api/v1/ai', aiRouter);
 
 // Handle undefined routes
 app.all('*', (req, res, next) => {

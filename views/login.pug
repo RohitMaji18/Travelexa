@@ -12,4 +12,7 @@ block content
           label.form__label(for='password') Password
           input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
         .form__group
-          button.btn.btn--green Login
+          button.btn.btn--green(type='submit')
+            svg(width='20' height='20' viewBox='0 0 24 24' fill='currentColor' style='margin-right: 8px')
+              path(d='M10 17v-3H3v-4h7V7l5 5-5 5m4-15a2 2 0 012 2v2h-2V4H6v16h8v-2h2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2h8z')
+            span Login

@@ -62,6 +62,9 @@ block content
       each p in parapraphs
         p.description__text= p
 
+      // Planner button + modal
+      include _planner
+
   section.section-pictures
     each img, i in tour.images
       .picture-box
@@ -78,20 +81,20 @@ block content
   section.section-cta
     .cta
       .cta__img.cta__img--logo
-        img(src='/img/logo-white.png', alt='Natours logo')
-      img.cta__img.cta__img--1(src=`/img/tours/${tour.images[1]}`, alt='Tour picture')
-      img.cta__img.cta__img--2(src=`/img/tours/${tour.images[2]}`, alt='Tour picture')
+        img(src='/img/logo-white.png' alt='Travelexa logo')
+      img.cta__img.cta__img--1(src=`/img/tours/${tour.images[1]}` alt='Tour picture')
+      img.cta__img.cta__img--2(src=`/img/tours/${tour.images[2]}` alt='Tour picture')
       .cta__content
         h2.heading-secondary What are you waiting for?
         p.cta__text= `${tour.duration} days. 1 adventure. Infinite memories. Make it yours today!`
-        
+
         if user
-          button.btn.btn--green.span-all-rows#book-tour(data-tour-id=`${tour.id}`) Book tour now!
+          button.btn.btn--green.span-all-rows#book-tour(data-tour-id=`${tour.id}`)
+            svg(width='20' height='20' viewBox='0 0 24 24' fill='currentColor' style='margin-right: 8px')
+              path(d='M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7v2H3V4h3.5l1-1h5l1 1H17zm-2 4H5v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8z')
+            span Book tour now!
         else
-          a.btn.btn--green.span-all-rows(href='/login') Log in to book tour
-
-
-
-
-
-
+          a.btn.btn--green.span-all-rows(href='/login')
+            svg(width='20' height='20' viewBox='0 0 24 24' fill='currentColor' style='margin-right: 8px')
+              path(d='M10 17v-3H3v-4h7V7l5 5-5 5m4-15a2 2 0 012 2v2h-2V4H6v16h8v-2h2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2h8z')
+            span Log in to book tour

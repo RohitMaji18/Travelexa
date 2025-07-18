@@ -9,10 +9,10 @@
     "ratingsQuantity": 37,
     "price": 397,
     "summary": "Breathtaking hike through the Canadian Banff National Park",
-    "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "description": "Experience the breathtaking beauty of the Canadian Rockies on this incredible hiking adventure through Banff National Park. This tour offers spectacular mountain vistas, pristine alpine lakes, and diverse wildlife encounters. You'll traverse well-maintained trails suitable for all skill levels, visit iconic landmarks, and immerse yourself in the untouched wilderness of one of Canada's most celebrated national parks.",
     "imageCover": "tour-1-cover.jpg",
     "images": ["tour-1-1.jpg", "tour-1-2.jpg", "tour-1-3.jpg"],
-    "startDates": ["2021-04-25,10:00", "2021-07-20,10:00", "2021-10-05,10:00"]
+    "startDates": ["2025-04-25,10:00", "2025-07-20,10:00", "2025-10-05,10:00"]
   },
   {
     "id": 1,
@@ -24,10 +24,10 @@
     "ratingsQuantity": 23,
     "price": 497,
     "summary": "Exploring the jaw-dropping US east coast by foot and by boat",
-    "description": "Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nIrure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "description": "Embark on an unforgettable coastal adventure exploring the stunning US east coast. This tour combines the best of land and sea experiences, featuring pristine beaches, charming coastal towns, and exciting boat excursions. You'll discover hidden coves, observe marine wildlife, and enjoy breathtaking ocean views while walking along scenic shorelines and sailing through crystal-clear waters.",
     "imageCover": "tour-2-cover.jpg",
     "images": ["tour-2-1.jpg", "tour-2-2.jpg", "tour-2-3.jpg"],
-    "startDates": ["2021-06-19,10:00", "2021-07-20,10:00", "2021-08-18,10:00"]
+    "startDates": ["2025-06-19,10:00", "2025-07-20,10:00", "2025-08-18,10:00"]
   },
   {
     "id": 2,
@@ -39,10 +39,10 @@
     "ratingsQuantity": 13,
     "price": 997,
     "summary": "Exciting adventure in the snow with snowboarding and skiing",
-    "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum!\nDolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, exercitation ullamco laboris nisi ut aliquip. Lorem ipsum dolor sit amet, consectetur adipisicing elit!",
+    "description": "Get ready for the ultimate winter adventure in the snow-covered mountains of Aspen! This thrilling tour combines world-class snowboarding and skiing with breathtaking alpine scenery. Whether you're a beginner or expert, our professional instructors will help you master the slopes while you enjoy fresh powder snow, cozy mountain lodges, and the exhilarating rush of winter sports in one of America's premier ski destinations.",
     "imageCover": "tour-3-cover.jpg",
     "images": ["tour-3-1.jpg", "tour-3-2.jpg", "tour-3-3.jpg"],
-    "startDates": ["2022-01-05,10:00", "2022-02-12,10:00", "2023-01-06,10:00"]
+    "startDates": ["2025-01-05,10:00", "2025-02-12,10:00", "2026-01-06,10:00"]
   },
   {
     "id": 3,
@@ -54,10 +54,10 @@
     "ratingsQuantity": 54,
     "price": 1197,
     "summary": "Living the life of Wanderlust in the US' most beatiful cities",
-    "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat lorem ipsum dolor sit amet.\nConsectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat!",
+    "description": "Discover the vibrant energy and diverse culture of America's most beautiful cities on this urban exploration adventure. From the bustling streets of New York to the golden coast of California, you'll experience iconic landmarks, world-class museums, diverse neighborhoods, and local cuisine. This tour perfectly balances must-see attractions with hidden gems, giving you an authentic taste of American city life and culture.",
     "imageCover": "tour-4-cover.jpg",
     "images": ["tour-4-1.jpg", "tour-4-2.jpg", "tour-4-3.jpg"],
-    "startDates": ["2021-03-11,10:00", "2021-05-02,10:00", "2021-06-09,10:00"]
+    "startDates": ["2025-03-11,10:00", "2025-05-02,10:00", "2025-06-09,10:00"]
   },
   {
     "id": 4,
@@ -69,10 +69,10 @@
     "ratingsQuantity": 19,
     "price": 1497,
     "summary": "Breathing in Nature in America's most spectacular National Parks",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum!",
+    "description": "Immerse yourself in the raw beauty of America's most spectacular national parks on this comprehensive camping adventure. From the towering red rocks of Zion to the vast expanse of the Grand Canyon, you'll witness geological wonders, diverse ecosystems, and breathtaking landscapes. This tour includes comfortable camping facilities, guided hikes, and opportunities to connect with nature in some of the most pristine wilderness areas in the United States.",
     "imageCover": "tour-5-cover.jpg",
     "images": ["tour-5-1.jpg", "tour-5-2.jpg", "tour-5-3.jpg"],
-    "startDates": ["2021-08-05,10:00", "2022-03-20,10:00", "2022-08-12,10:00"]
+    "startDates": ["2025-08-05,10:00", "2025-03-20,10:00", "2025-08-12,10:00"]
   },
   {
     "id": 5,
@@ -84,10 +84,10 @@
     "ratingsQuantity": 28,
     "price": 2997,
     "summary": "Surfing, skating, parajumping, rock climbing and more, all in one tour",
-    "description": "Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nVoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur!",
+    "description": "Push your limits with this action-packed extreme sports adventure along the California coast! Experience the thrill of surfing perfect waves, skateboarding in iconic parks, skydiving over stunning landscapes, white-water rafting, and rock climbing in world-renowned locations. This tour is designed for adrenaline junkies who want to combine multiple extreme sports with California's beautiful scenery and perfect weather.",
     "imageCover": "tour-6-cover.jpg",
     "images": ["tour-6-1.jpg", "tour-6-2.jpg", "tour-6-3.jpg"],
-    "startDates": ["2021-07-19,10:00", "2021-09-06,10:00", "2022-03-18,10:00"]
+    "startDates": ["2025-07-19,10:00", "2025-09-06,10:00", "2025-03-18,10:00"]
   },
   {
     "id": 6,
@@ -99,10 +99,10 @@
     "ratingsQuantity": 35,
     "price": 1997,
     "summary": "Exquisite wines, scenic views, exclusive barrel tastings,  and much more",
-    "description": "Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nIrure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "description": "Indulge in the finest wines and most beautiful vineyard landscapes of Napa Valley on this exclusive wine tasting tour. Visit prestigious wineries, enjoy private barrel tastings, learn about winemaking processes from expert sommeliers, and savor gourmet food pairings. This sophisticated tour combines world-class wines with stunning vineyard views, elegant tasting rooms, and the rich history of California's premier wine region.",
     "imageCover": "tour-7-cover.jpg",
     "images": ["tour-7-1.jpg", "tour-7-2.jpg", "tour-7-3.jpg"],
-    "startDates": ["2021-02-12,10:00", "2021-04-14,10:00", "2021-09-01,10:00"]
+    "startDates": ["2025-02-12,10:00", "2025-04-14,10:00", "2025-09-01,10:00"]
   },
   {
     "id": 7,
@@ -114,10 +114,10 @@
     "ratingsQuantity": 28,
     "price": 2997,
     "summary": "The most remote and stunningly beautiful places for seeing the night sky",
-    "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "description": "Journey to the most remote and pristine locations for an unforgettable stargazing experience under some of the darkest skies in North America. This tour takes you to carefully selected sites with minimal light pollution, where you'll observe celestial wonders through high-quality telescopes guided by expert astronomers. Learn about constellations, planets, and deep-space objects while enjoying the profound beauty of the night sky.",
     "imageCover": "tour-8-cover.jpg",
     "images": ["tour-8-1.jpg", "tour-8-2.jpg", "tour-8-3.jpg"],
-    "startDates": ["2021-03-23,10:00", "2021-10-25,10:00", "2022-01-30,10:00"]
+    "startDates": ["2025-03-23,10:00", "2025-10-25,10:00", "2026-01-30,10:00"]
   },
   {
     "id": 8,
@@ -129,9 +129,9 @@
     "ratingsQuantity": 33,
     "price": 1497,
     "summary": "Enjoy the Northern Lights in one of the best places in the world",
-    "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum!\nDolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, exercitation ullamco laboris nisi ut aliquip. Lorem ipsum dolor sit amet, consectetur adipisicing elit!",
+    "description": "Witness the magical Northern Lights in one of the world's best viewing locations in the Canadian Arctic. This tour offers optimal conditions for aurora borealis sightings, with comfortable heated accommodations and expert guides who know the best viewing spots and timing. Experience the wonder of dancing lights across the polar sky while learning about this incredible natural phenomenon and Inuit culture.",
     "imageCover": "tour-9-cover.jpg",
     "images": ["tour-9-1.jpg", "tour-9-2.jpg", "tour-9-3.jpg"],
-    "startDates": ["2021-12-16,10:00", "2022-01-16,10:00", "2022-12-12,10:00"]
+    "startDates": ["2024-12-16,10:00", "2025-01-16,10:00", "2025-12-12,10:00"]
   }
 ]

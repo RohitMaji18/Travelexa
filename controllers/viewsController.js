@@ -5,25 +5,6 @@ const Review = require('../models/reviewModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
-// ✅ Optimized CSP Policy
-const cspHeader = [
-  "default-src 'self'",
-  "base-uri 'self'",
-  'block-all-mixed-content',
-  "font-src 'self' https: data:",
-  "frame-ancestors 'self'",
-  "img-src 'self' data: https://*.tile.openstreetmap.org",
-  "object-src 'none'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdnjs.cloudflare.com https://js.stripe.com blob:",
-  "script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdnjs.cloudflare.com https://js.stripe.com blob:",
-  "frame-src 'self' https://js.stripe.com",
-  "worker-src 'self' blob:",
-  "script-src-attr 'none'",
-  "style-src 'self' https: 'unsafe-inline' https://unpkg.com/leaflet/dist/ https://cdnjs.cloudflare.com/ajax/libs/leaflet/",
-  "connect-src 'self' ws://127.0.0.1:* https://*.tile.openstreetmap.org",
-  'upgrade-insecure-requests'
-].join('; ');
-
 exports.getLandingPage = catchAsync(async (req, res) => {
   // ✅ Fetch tours (limit 4)
   const tours = await Tour.find()
@@ -79,7 +60,7 @@ exports.getLandingPage = catchAsync(async (req, res) => {
   // Make sure user is properly passed to the template
   res
     .status(200)
-    .set('Content-Security-Policy', cspHeader)
+
     .render('landing', {
       title: 'Welcome to Travelexa',
       heroImage: '/img/hero.jpg',
@@ -128,7 +109,7 @@ exports.getOverview = catchAsync(async (req, res) => {
   const tours = await Tour.find();
   res
     .status(200)
-    .set('Content-Security-Policy', cspHeader)
+
     .render('overview', {
       title: 'All Tours',
       tours
@@ -147,7 +128,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
 
   res
     .status(200)
-    .set('Content-Security-Policy', cspHeader)
+
     .render('tour', {
       title: `${tour.name} Tour`,
       tour
@@ -157,21 +138,21 @@ exports.getTour = catchAsync(async (req, res, next) => {
 exports.getLoginForm = (req, res) => {
   res
     .status(200)
-    .set('Content-Security-Policy', cspHeader)
+
     .render('login', { title: 'Log into your account' });
 };
 
 exports.getSignupForm = (req, res) => {
   res
     .status(200)
-    .set('Content-Security-Policy', cspHeader)
+
     .render('signup', { title: 'Sign up for an account' });
 };
 
 exports.getAccount = (req, res) => {
   res
     .status(200)
-    .set('Content-Security-Policy', cspHeader)
+
     .render('account', {
       title: 'Your Account'
     });
@@ -192,7 +173,7 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
 
   res
     .status(200)
-    .set('Content-Security-Policy', cspHeader)
+
     .render('account', {
       title: 'Your Account',
       user: updatedUser
@@ -206,7 +187,7 @@ exports.getMyTours = catchAsync(async (req, res, next) => {
 
   res
     .status(200)
-    .set('Content-Security-Policy', cspHeader)
+
     .render('overview', {
       title: 'My Tours',
       tours

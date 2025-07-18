@@ -1,108 +1,192 @@
 extends base
 
 block content
-  //- Hero Section with CSS-only Parallax Effect
-  section.hero-section
-    .hero-parallax
-      img.hero-image(src=heroImage, alt="Explore the world" onerror="this.src='/img/default.jpg'")
-    .hero-content.animate
-      h1.hero-title= heroTitle
-      p.hero-subtitle= heroSubtitle
-      a.hero-btn(href="/tours") Explore Tours
+  main.premium-main
+    //- Split Hero Section - Premium Layout
+    section.split-hero
+      .hero-left
+        .hero-content-wrapper
+          .hero-badge Premium Destinations
+          h1.hero-main-title= heroTitle
+          p.hero-description= heroSubtitle
+          .hero-actions
+            a.premium-btn.premium-btn--primary(href="/tours")
+              span Explore Collection
+              .btn-arrow →
+            .hero-stats
+              .stat-item
+                .stat-number 500+
+                .stat-label Destinations
+              .stat-item
+                .stat-number 50K+
+                .stat-label Happy Travelers
+      .hero-right
+        .hero-image-container
+          img.hero-main-image(src=heroImage, alt="Premium Travel Experience" onerror="this.src='/img/default.jpg'")
+          .floating-card.floating-card--1
+            .card-icon 🌟
+            .card-text Premium Experience
+          .floating-card.floating-card--2
+            .card-icon 🗺️
+            .card-text Expert Guides
 
-  //- Reasons Section
-  section.reasons.animate
-    .container
-      h2.section-title Why Visit This Destination?
-      .reason-grid
-        each reason in reasonsList
-          .reason-card.animate-card
-            .reason-img-container
-              img.reason-img(src=reason.image, alt=reason.title onerror="this.src='/img/default.jpg'")
-            h3.reason-heading= reason.title
-            p.reason-desc= reason.description
-            a.reason-btn(href=reason.link)= reason.buttonText
+    //- Feature Showcase - Alternating Layout
+    section.feature-showcase
+      .showcase-container
+        each reason, index in reasonsList
+          .feature-block(class=index % 2 === 0 ? 'feature-block--left' : 'feature-block--right')
+            .feature-content
+              .feature-number= `0${index + 1}`
+              h3.feature-title= reason.title
+              p.feature-description= reason.description
+              a.feature-link(href=reason.link)
+                span= reason.buttonText
+                .link-arrow →
+            .feature-visual
+              .feature-image-wrapper
+                img.feature-image(src=reason.image, alt=reason.title onerror="this.src='/img/default.jpg'")
+                .feature-overlay
 
-  //- Popular Tours Section
-  section.explore.animate
-    .container
-      h2.section-title Popular Tours
-      .explore-grid
-        each tour in tours
-          .explore-card.animate-card
-            .explore-img-container
-              img.explore-img(src=`/img/tours/${tour.imageCover}`, alt=tour.name onerror="this.src='/img/default-tour.jpg'")
-            .explore-content
-              h3.explore-card-title= tour.name
-              p.explore-card-price 
-                span.price-label From 
-                span.price-value $#{tour.price}
-              .explore-buttons
-                a.explore-btn(href=`/tour/${tour.slug}`) View Details
-                a.book-btn(href=`/tour/${tour.slug}`) Book Now
-                
+    //- Premium Tour Gallery
+    section.tour-gallery
+      .gallery-header
+        .section-badge Curated Collection
+        h2.gallery-title Exclusive Tours & Experiences
+        p.gallery-subtitle Handpicked adventures for the discerning traveler
+      
+      .gallery-grid
+        each tour, index in tours
+          .tour-item(class=index === 0 ? 'tour-item--featured' : '')
+            .tour-image-container
+              img.tour-image(src=`/img/tours/${tour.imageCover}`, alt=tour.name onerror="this.src='/img/default-tour.jpg'")
+              .tour-overlay
+                .tour-price $#{tour.price}
+                .tour-actions
+                  a.tour-btn.tour-btn--view(href=`/tour/${tour.slug}`)
+                    span View Details
+                  a.tour-btn.tour-btn--book(href=`/tour/${tour.slug}`)
+                    span Book Now
+            .tour-info
+              h4.tour-name= tour.name
+              .tour-meta
+                .tour-duration= tour.duration || '7 days'
+                .tour-difficulty= tour.difficulty || 'Moderate'
 
-  //- About Section
-  section.about.animate
-    .container
-      h2.section-title= aboutTitle
+    //- Social Proof Section
+    if reviewsList && reviewsList.length > 0
+      section.social-proof
+        .proof-container
+          .proof-header
+            h3.proof-title What Our Guests Say
+            .proof-rating
+              .rating-stars
+                each star in [1,2,3,4,5]
+                  .star ★
+              .rating-text 4.9 out of 5 stars
+          
+          .testimonial-carousel
+            each review in reviewsList.slice(0, 3)
+              .testimonial-card
+                .testimonial-content
+                  p.testimonial-text= review.text
+                .testimonial-author
+                  .author-avatar
+                    - const photoPath = review.user && review.user.photo ? (review.user.photo.startsWith('http') ? review.user.photo : `/img/users/${review.user.photo}`) : '/img/default-user.jpg';
+                    img(src=photoPath, alt=review.user ? review.user.name : "Anonymous" onerror="this.src='/img/default-user.jpg'")
+                  .author-info
+                    .author-name= review.user ? review.user.name : "Anonymous"
+                    if review.tour
+                      .author-tour= review.tour.name
+                    .author-rating
+                      - const stars = Math.round(review.rating);
+                      - for (let i = 0; i < 5; i++)
+                        span.mini-star(class=i < stars ? 'mini-star--filled' : '') ★
+
+    //- About Section - Premium Layout
+    section.about-premium
       .about-container
-        .about-image-container
-          img.about-image(src=aboutImage, alt="About Us" onerror="this.src='/img/default-about.jpg'")
+        .about-visual
+          .about-image-main
+            img(src=aboutImage, alt="About Us" onerror="this.src='/img/default-about.jpg'")
+          .about-stats-overlay
+            .stats-grid
+              .stat-box
+                .stat-icon 🏆
+                .stat-value 15+
+                .stat-label Years Experience
+              .stat-box
+                .stat-icon 🌍
+                .stat-value 50+
+                .stat-label Countries
+        
         .about-content
+          .content-badge= aboutTitle
           h3.about-heading= aboutHeading
-          p.about-desc= aboutDescription
-          ul.about-list
+          p.about-text= aboutDescription
+          .about-features
             each fact in aboutFacts
-              li.about-item
-                i.about-icon ✓
+              .feature-item
+                .feature-check ✓
                 span= fact
-          //a.about-btn(href="/") Learn More
 
-  //- Reviews Section (Optimized for unique reviews)
-  section.reviews.animate
-    .container
-      h2.section-title What Our Travelers Say
-      if reviewsList && reviewsList.length > 0
-        .review-grid
-          each review in reviewsList
-            .review-card.animate-card
-              .review-header
-                .review-avatar-container
-                  - const photoPath = review.user && review.user.photo ? (review.user.photo.startsWith('http') ? review.user.photo : `/img/users/${review.user.photo}`) : '/img/default-user.jpg';
-                  img.review-avatar(src=photoPath, alt=review.user ? review.user.name : "Anonymous" onerror="this.src='/img/default-user.jpg'")
-                .review-user-info
-                  h3.review-user= review.user ? review.user.name : "Anonymous"
-                  .review-rating
-                    - const stars = Math.round(review.rating);
-                    - for (let i = 0; i < 5; i++)
-                      if i < stars
-                        span.star.filled ★
-                      else
-                        span.star ☆
-              .review-body
-                p.review-text= review.text
-                if review.tour
-                  p.review-tour 
-                    span Tour: 
-                    a(href=`/tour/${review.tour.slug || '#' }`)= review.tour.name
-      else
-        .no-reviews
-          p.no-reviews-text No reviews available yet. Be the first to review!
+    //- Contact Section - Integrated Design
+    section.contact-premium
+      .contact-container
+        .contact-info
+          .contact-header
+            h3.contact-title= contactTitle
+            p.contact-subtitle Ready to embark on your next adventure? Let's create something extraordinary together.
+          
+          .contact-details
+            .contact-item
+              .contact-icon 📧
+              .contact-text hello@premium-travel.com
+            .contact-item
+              .contact-icon 📞
+              .contact-text +1 (555) 123-4567
+            .contact-item
+              .contact-icon 📍
+              .contact-text New York, London, Tokyo
+        
+        .contact-form-wrapper
+          form.premium-form(action="/request", method="POST")
+            .form-header
+              h4 Send us a message
+              p Tell us about your dream destination
+            
+            .form-grid
+              .form-group
+                label.form-label(for="name") Full Name
+                input.form-input#name(type="text", name="name", placeholder="Your full name", required)
+              
+              .form-group
+                label.form-label(for="email") Email Address
+                input.form-input#email(type="email", name="email", placeholder="your@email.com", required)
+            
+            .form-group.form-group--full
+              label.form-label(for="message") Your Message
+              textarea.form-textarea#message(name="message", placeholder="Tell us about your travel dreams and preferences...", rows="5", required)
+            
+            button.premium-btn.premium-btn--submit(type="submit")
+              span Send Message
+              .btn-arrow →
 
-  //- Contact Section
-  section.contact.animate
-    .container
-      h2.section-title= contactTitle
-      form.contact-form(action="/request", method="POST")
-        .form-group
-          label(for="name") Your Name
-          input#name(type="text", name="name", placeholder="Enter your name", required)
-        .form-group
-          label(for="email") Your Email
-          input#email(type="email", name="email", placeholder="Enter your email", required)
-        .form-group
-          label(for="message") Your Message
-          textarea#message(name="message", placeholder="What would you like to know?", required)
-        button.contact-btn(type="submit") Send Request
+    //- Final CTA Section
+    section.final-cta
+      .cta-container
+        .cta-content
+          h2.cta-title Your Adventure Awaits
+          p.cta-text Join thousands of travelers who have discovered extraordinary destinations with our curated experiences.
+          a.premium-btn.premium-btn--outline(href="/tours")
+            span Start Your Journey
+            .btn-arrow →
+        .cta-visual
+          .cta-image-grid
+            .cta-image-item
+              img(src=heroImage, alt="Adventure 1" onerror="this.src='/img/default.jpg'")
+            .cta-image-item
+              img(src=aboutImage, alt="Adventure 2" onerror="this.src='/img/default-about.jpg'")
+
+
+
 

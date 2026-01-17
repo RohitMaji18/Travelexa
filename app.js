@@ -1,208 +1,142 @@
-// const path = require('path');
-// const express = require('express');
-
-// const morgan = require('morgan');
-// const rateLimit = require('express-rate-limit');
-// const mongoSanitize = require('express-mongo-sanitize');
-// const xss = require('xss-clean');
-// const hpp = require('hpp');
-// const cors = require('cors');
-// const cookieParser = require('cookie-parser');
-// const bodyParser = require('body-parser');
-// const helmet = require('helmet');
-// const compression = require('compression');
-
-// const optimizeStatic = require('./utils/optimizeStatic');
-
-// const aiRouter = require('./routes/aiRoutes');
-// const AppError = require('./utils/appError');
-// const globalErrorHandler = require('./controllers/errorController');
-// //const viewsController = require('./controllers/viewsController');
-// const tourRouter = require('./routes/tourRoutes');
-// const userRouter = require('./routes/userRoutes');
-// const bookingRouter = require('./routes/bookingRoutes');
-// const bookingController = require('./controllers/bookingController'); //new
-// const reviewRouter = require('./routes/reveiwRoutes');
-// const cspDirectives = require('./config/helmet-csp');
-// const viewRoutes = require('./routes/viewRoutes');
-
-// const app = express();
-
-// app.enable('trust proxy', 1); //✅ Secure for Render
-
-// // Set template engine
-// app.set('view engine', 'pug');
-// app.set('views', path.join(__dirname, 'views'));
-
-// // 1) MIDDLEWARES
-// //implement CORS
-// app.use(cors());
-// app.options('*', cors());
-
-// // ✅ Enable compression for all responses
-// app.use(compression());
-
-// app.use(
-//   express.static(path.join(__dirname, 'public'), {
-//     maxAge: '1d',
-//     etag: false
-//   })
-// );
-
-// // ✅ Apply static optimization (WebP, Brotli, Gzip, caching)
-// optimizeStatic(app);
-
-// // ✅ Fix: Set correct CSP policy
-// //app.use(helmet());
-// app.use(helmet.contentSecurityPolicy(cspDirectives));
-
-// // Logging requests in development mode
-// if (process.env.NODE_ENV === 'development') {
-//   app.use(morgan('dev'));
-// }
-
-// // Rate limiter
-// const limiter = rateLimit({
-//   windowMs: 60 * 60 * 1000, // 1 hour
-//   max: 100,
-//   message: 'Too many requests from this IP, please try again in an hour.'
-// });
-// app.use('/api', limiter);
-// //new webhook stripe
-// // Stripe webhook, BEFORE body-parser, because stripe needs the body as stream
-// app.post(
-//   '/webhook-checkout',
-//   bodyParser.raw({ type: 'application/json' }),
-//   bookingController.webhookCheckout
-// );
-// // Body parser
-// app.use(express.json({ limit: '10kb' }));
-// app.use(express.urlencoded({ extended: true, limit: '10kb' }));
-
-// app.use(cookieParser());
-// // Security middleware
-// app.use(mongoSanitize());
-// app.use(xss());
-// app.use(
-//   hpp({
-//     whitelist: [
-//       'duration',
-//       'ratingsAverage',
-//       'ratingsQuantity',
-//       'price',
-//       'maxGroupSize',
-//       'difficulty'
-//     ]
-//   })
-// );
-
-// app.use(compression());
-// //optimizeStatic(app);
-
-// // Custom middleware
-// app.use((req, res, next) => {
-//   req.requestTime = new Date().toISOString();
-
-//   next();
-// });
-
-// // Ignore .map file requests
-// app.get('*.map', (req, res) => res.status(204).send());
-
-// // Handle .well-known requests
-// app.use(
-//   '/.well-known',
-//   express.static(path.join(__dirname, 'public/.well-known'))
-// );
-
-// // 3) ROUTES
-// // Health / root route (IMPORTANT for Render)
-// // app.get('/', (req, res) => {
-// //   res.status(200).send('TravelXa API is running');
-// // });
-
-// app.use('/', viewRoutes);
-// app.use('/api/v1/tours', tourRouter);
-// app.use('/api/v1/users', userRouter);
-// app.use('/api/v1/reviews', reviewRouter);
-// app.use('/api/v1/bookings', bookingRouter);
-// app.use('/api/v1/ai', aiRouter);
-
-// // Handle undefined routes
-// app.all('*', (req, res, next) => {
-//   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-// });
-
-// // Global error handling
-// app.use(globalErrorHandler);
-
-// module.exports = app;
-
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
-//const rateLimit = require('express-rate-limit');
-//const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
-//const hpp = require('hpp');
+const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser'); // Webhook ke liye zaroori hai
 const compression = require('compression');
 const cors = require('cors');
 
+// Utils & Config
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
+const cspDirectives = require('./config/helmet-csp'); // Tera CSP config
 
-// ✅ IMPORTS
-const viewsController = require('./controllers/viewsController'); // Direct Import
+// Controllers
+const viewsController = require('./controllers/viewsController');
+const authController = require('./controllers/authController');
+const bookingController = require('./controllers/bookingController');
+
+// Routers
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reveiwRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+const aiRouter = require('./routes/aiRoutes');
 
 const app = express();
 
-app.enable('trust proxy');
+app.set('trust proxy', 1); // Trust first proxy
 
-// VIEW ENGINE
+// 1) VIEW ENGINE SETUP
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-// MIDDLEWARES
+// 2) GLOBAL MIDDLEWARES
+// Implement CORS
 app.use(cors());
 app.options('*', cors());
+
+// Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Set Security HTTP headers (CSP Fix)
+app.use(helmet.contentSecurityPolicy(cspDirectives));
+
+// Development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+// Limit requests from same API
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in an hour!'
+});
+app.use('/api', limiter);
+
+// Stripe webhook (Ye Body Parser se PEHLE aana chahiye)
+app.post(
+  '/webhook-checkout',
+  bodyParser.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
+
+// Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
+
+// Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
+
+// Data sanitization against XSS
 app.use(xss());
+
+// Prevent parameter pollution
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsAverage',
+      'ratingsQuantity',
+      'maxGroupSize',
+      'difficulty',
+      'price'
+    ]
+  })
+);
+
 app.use(compression());
 
-// ✅ ROUTES (Yahan maine fix kiya hai)
-// Hum router file use nahi kar rahe, seedha yahan likh rahe hain
-app.get('/', viewsController.getLandingPage);
-app.get('/tours', viewsController.getOverview);
-app.get('/tour/:slug', viewsController.getTour);
-app.get('/login', viewsController.getLoginForm);
-app.get('/signup', viewsController.getSignupForm);
+// Test Middleware
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
 
-// API Routes
+// ✅ FIX: Ignore .map files and well-known requests (Console Error Fix)
+app.get('*.map', (req, res) => res.status(204).end());
+app.get('/.well-known/*', (req, res) => res.status(204).end());
+
+// 3) ROUTES
+
+// ✅ VIEW ROUTES (Direct Wiring + Auth Logic)
+// isLoggedIn: Header update karega (Login vs User Photo)
+// protect: Sirf logged-in users ko allow karega
+app.get('/', authController.isLoggedIn, viewsController.getLandingPage);
+app.get('/tours', authController.isLoggedIn, viewsController.getOverview);
+app.get('/tour/:slug', authController.isLoggedIn, viewsController.getTour);
+app.get('/login', authController.isLoggedIn, viewsController.getLoginForm);
+app.get('/signup', authController.isLoggedIn, viewsController.getSignupForm);
+app.get('/me', authController.protect, viewsController.getAccount);
+app.get('/my-tours', authController.protect, viewsController.getMyTours);
+
+// Submit User Data Form
+app.post(
+  '/submit-user-data',
+  authController.protect,
+  viewsController.updateUserData
+);
+
+// ✅ API ROUTES
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRouter);
+app.use('/api/v1/ai', aiRouter);
 
-// ERROR HANDLER
+// ✅ 404 HANDLING (Sabse Last Mein)
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
+// GLOBAL ERROR HANDLER
 app.use(globalErrorHandler);
 
 module.exports = app;

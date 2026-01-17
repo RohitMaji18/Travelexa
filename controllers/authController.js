@@ -100,9 +100,15 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer') // Check if the token is provided in Bearer format
   ) {
-    token = req.headers.authorization.split(' ')[1]; // Extract the token from 'Bearer <token>'
+    token = req.headers.authorization;
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
+  }
+
+  console.log('Token received:', token);
+  // Check if the token is missing or malformed
+  if (!token || token.split('.').length !== 3) {
+    return next(new AppError('Invalid or malformed token.', 401));
   }
 
   // If token is missing, return authentication error

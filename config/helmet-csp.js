@@ -34,7 +34,8 @@ const cspDirectives = {
       'https://js.stripe.com',
       'https://cdnjs.cloudflare.com',
       'https://unpkg.com',
-      'blob:'
+      'blob:',
+      'https://cdnjs.cloudflare.com/ajax/libs/marked/'
     ],
     scriptSrcElem: [
       "'self'",
@@ -46,11 +47,14 @@ const cspDirectives = {
     ],
     connectSrc: [
       "'self'", // This correctly allows API calls to your own server
-      // REMOVED: '/api/v1/ai/itinerary-stream' (This was an invalid path)
       'https://*.stripe.com',
       'https://*.tile.openstreetmap.org',
+      'https://unpkg.com', // Leaflet source map and assets
+      'https://generativelanguage.googleapis.com', // Google Generative AI
       'ws://127.0.0.1:*', // Allows WebSocket connections for live reload
-      'ws://localhost:*' // Also for live reload
+      'ws://localhost:*', // Also for live reload
+      'http://localhost:*', // HTTP EventSource connections
+      'http://127.0.0.1:*' // EventSource for local development
     ],
 
     // Worker and Frame Policies

@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const compression = require('compression');
 
-//const optimizeStatic = require('./utils/optimizeStatic'); // ✅ Add this
+const optimizeStatic = require('./utils/optimizeStatic');
 
 const aiRouter = require('./routes/aiRoutes');
 const AppError = require('./utils/appError');
@@ -38,7 +38,18 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(cors());
 app.options('*', cors());
 
-app.use(express.static(path.join(__dirname, 'public')));
+// ✅ Enable compression for all responses
+app.use(compression());
+
+app.use(
+  express.static(path.join(__dirname, 'public'), {
+    maxAge: '1d',
+    etag: false
+  })
+);
+
+// ✅ Apply static optimization (WebP, Brotli, Gzip, caching)
+optimizeStatic(app);
 
 // ✅ Fix: Set correct CSP policy
 //app.use(helmet());
@@ -95,6 +106,11 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
+// Health / root route (IMPORTANT for Render)
+// app.get('/', (req, res) => {
+//   res.status(200).send('TravelXa API is running');
+// });
+
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);

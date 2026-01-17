@@ -1,15 +1,26 @@
 /* controllers/aiController.js
     ✈️  Gemini‑powered itinerary generation
 -------------------------------------------------- */
-
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const Groq = require('groq-sdk');
+// const { GoogleGenerativeAI } = require('@google/generative-ai');
 const Itinerary = require('../models/itineraryModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 /* ── Initialize Gemini ─────────────────────────── */
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+// const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+// const model = genAI.getGenerativeModel(
+//   {
+//     model: 'gemini-1.0-pro'
+//   },
+//   {
+//     apiVersion: 'v1beta'
+//   }
+// );
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY
+});
 
 /* ── Prompt builder ────────────────────────────── */
 const buildPrompt = ({ destination, days, style, budget, theme }) => `
@@ -68,8 +79,16 @@ exports.generatePlan = catchAsync(async (req, res, next) => {
 
   try {
     console.log('🧠  Sending prompt to Gemini …');
-    const result = await model.generateContent(prompt);
-    const planMarkdown = result.response.text();
+    // const result = await model.generateContent(prompt);
+    // const planMarkdown = result.response.text();
+    const completion = await groq.chat.completions.create({
+      model: 'llama-3.1-8b-instant',
+
+      messages: [{ role: 'user', content: prompt }]
+    });
+
+    const planMarkdown = completion.choices[0].message.content;
+
     console.log('✅  Gemini response received');
 
     const savedPlan = await Itinerary.create({
@@ -82,7 +101,8 @@ exports.generatePlan = catchAsync(async (req, res, next) => {
       theme,
       planMarkdown
     });
-
+    //
+    console.log('savedPlan massage', savedPlan);
     return res.status(200).json({
       status: 'success',
       data: { plan: planMarkdown, id: savedPlan.id }
@@ -95,15 +115,28 @@ exports.generatePlan = catchAsync(async (req, res, next) => {
 
 // Corrected function for streaming
 exports.generatePlanStream = catchAsync(async (req, res, next) => {
-  const { destination, days, style, budget, theme, tourId } = req.query;
+  const {
+    destination,
+    days,
+    style,
+    budget = 'standard',
+    theme = 'general',
+    tourId
+  } = req.query;
 
   if (!destination || !days || !style || !tourId) {
-    return next(new AppError('Missing required parameters', 400));
+    return next(
+      new AppError(
+        'Missing required parameters: destination, days, style, tourId',
+        400
+      )
+    );
   }
 
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
+  res.setHeader('X-Accel-Buffering', 'no');
   res.flushHeaders();
 
   const prompt = buildPrompt({ destination, days, style, budget, theme });
@@ -112,14 +145,38 @@ exports.generatePlanStream = catchAsync(async (req, res, next) => {
   try {
     console.log('🧠  Starting Gemini stream…');
     // THE FIX: Use object destructuring as recommended by ESLint
-    const { stream } = await model.generateContentStream(prompt);
+    // const { stream } = await model.generateContentStream(prompt);
+    const stream = await groq.chat.completions.create({
+      model: 'llama-3.1-8b-instant',
 
+      messages: [{ role: 'user', content: prompt }],
+      stream: true
+    });
+    // eslint-disable-next-line no-restricted-syntax
+    // for await (const chunk of stream) {
+    //   const textChunk = chunk.text();
+    //   fullPlanMarkdown += textChunk;
+    //   res.write(`data: ${JSON.stringify({ text: textChunk })}\n\n`);
+    // }
     // eslint-disable-next-line no-restricted-syntax
     for await (const chunk of stream) {
-      const textChunk = chunk.text();
-      fullPlanMarkdown += textChunk;
-      res.write(`data: ${JSON.stringify({ text: textChunk })}\n\n`);
+      let textChunk = '';
+
+      if (
+        chunk.choices &&
+        chunk.choices[0] &&
+        chunk.choices[0].delta &&
+        chunk.choices[0].delta.content
+      ) {
+        textChunk = chunk.choices[0].delta.content;
+      }
+
+      if (textChunk) {
+        fullPlanMarkdown += textChunk;
+        res.write(`data: ${JSON.stringify({ text: textChunk })}\n\n`);
+      }
     }
+
     console.log('✅  Gemini stream finished.');
   } catch (err) {
     console.error('❌  Stream generation failed:', err.message);

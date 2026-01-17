@@ -10,17 +10,7 @@ const router = express.Router(); // Create a new router object to handle routes 
 // For example, the commented line below would call tourController.checkID every time a route contains an :id parameter.
 // router.param('id', tourController.checkID);
 
-//POST/tour/344reid/reviews
-//GET/tour/2344id/reviews
-//GET/tour/2345id/reviews/34reid
-// router
-//   .route('/:tourId/reviews')
-//   .post(
-//     authController.protect,
-//     authController.restrictTo('user'),
-//     reviewController.createReview
-//   );
-
+//
 router.use('/:tourId/reviews', reveiwRouter);
 
 // 📌 Special route: Get top 5 cheap tours using a predefined alias middleware

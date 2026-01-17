@@ -16,7 +16,11 @@ block content
   section.section-header
     .header__hero
       .header__hero-overlay &nbsp;
-      img.header__hero-img(src=`/img/tours/${tour.imageCover}`, alt=`${tour.name}`)
+      img.header__hero-img(
+        src=`/img/tours/${tour.imageCover}`, 
+        alt=`${tour.name}`,
+        loading='lazy'
+      )
 
     .heading-box
       h1.heading-primary
@@ -48,7 +52,11 @@ block content
 
           each guide in tour.guides
             .overview-box__detail
-              img.overview-box__img(src=`/img/users/${guide.photo}`, alt=`${guide.name}`)
+              img.overview-box__img(
+                src=`/img/users/${guide.photo}`, 
+                alt=`${guide.name}`,
+                loading='lazy'
+              )
 
               - if (guide.role === 'lead-guide')
                 span.overview-box__label Lead guide
@@ -68,7 +76,12 @@ block content
   section.section-pictures
     each img, i in tour.images
       .picture-box
-        img.picture-box__img(src=`/img/tours/${img}`, alt=`The Park Camper Tour ${i + 1}`, class=`picture-box__img--${i + 1}`)
+        img.picture-box__img(
+          src=`/img/tours/${img}`, 
+          alt=`The Park Camper Tour ${i + 1}`, 
+          class=`picture-box__img--${i + 1}`,
+          loading='lazy'
+        )
 
   section.section-map
     #map(data-locations=`${JSON.stringify(tour.locations)}`)

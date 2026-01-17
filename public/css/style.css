@@ -1,3 +1,6 @@
+/* Import Modern Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
 /* Modern CSS Variables */
 :root {
   /* Primary Brand Colors */
@@ -79,9 +82,6 @@
   /* Section Rotate */
   --section-rotate: 3vw;
 }
-
-/* Import Modern Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 /* Reset and Base Styles */
 *,
